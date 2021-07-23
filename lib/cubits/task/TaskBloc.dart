@@ -18,6 +18,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       newState[event.date] = event.data;
       yield StateTaskLoaded(newState);
     }
+    else if(event is EventTaskLoadedMultipleDate){
+      var newState = Map.of(state.data);
+      for(var dataSet in event.mapData.entries) {
+        newState[dataSet.key] = dataSet.value;
+      }
+      yield StateTaskLoaded(newState);
+    }
     else if(event is EventTaskAdded) {
       var newState = Map.of(state.data);
       List<Task> tasks = [...state.data[event.date] ?? [], ...event.data];

@@ -20,6 +20,13 @@ class EventTaskLoaded extends TaskEvent {
 }
 
 @immutable
+class EventTaskLoadedMultipleDate extends TaskEvent {
+  final DateTime date;
+  final Map<DateTime, List<Task>> mapData;
+  const EventTaskLoadedMultipleDate(this.date, this.mapData): super(date, const []);
+}
+
+@immutable
 class EventTaskAdded extends TaskEvent {
   final DateTime date;
   final List<Task> data;

@@ -26,7 +26,6 @@ class _State extends State<DayScreen> {
   @override
   void initState() {
     date = widget.date;
-    task = Task(1, "task 1", date, date);
     AppDatabase.db?.getTasksByDay(date).then((tasks) {
       BlocProvider.of<TaskBloc>(appKey.currentContext!).add(EventTaskLoaded(date, tasks));
     });
@@ -61,6 +60,7 @@ class _State extends State<DayScreen> {
                     BlocProvider.of<TaskBloc>(context).add(EventTaskRemoved(date, [task]));
                   }, () async {
                     var r = await showAppDialog(DialogConfirmDelete());
+                    if(!r) return false;
                     var isDelete = (await AppDatabase.db?.deleteTask(task.id!) ?? 0) > 0;
                     return isDelete;
                   });
